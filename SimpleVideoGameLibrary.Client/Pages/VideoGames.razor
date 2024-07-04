@@ -1,0 +1,27 @@
+﻿@page "/videogames"
+@inject HttpClient Http
+<h3>Video Games</h3>
+
+@if (games.Count <= 0)
+{
+	<span>Loading video games...</span>
+}
+else
+{
+	<QuickGrid Items="games.AsQueryable()">
+		<PropertyColumn Property="g => g.Title" />
+		<PropertyColumn Property="g => g.Publisher" />
+		<PropertyColumn Property="g => g.ReleaseYear" />
+	</QuickGrid>
+}
+
+
+@code {
+	List<VideoGame> games = new List<VideoGame>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		var result = await Http.GetFromJsonAsync<List<VideoGame>>("http://localhost:5010/api/videogame");
+		if (result != null) games = result;
+	}
+}
