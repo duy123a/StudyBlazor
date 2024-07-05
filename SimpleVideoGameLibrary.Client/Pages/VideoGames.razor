@@ -1,6 +1,9 @@
 ﻿@page "/videogames"
 @inject HttpClient Http
+@inject NavigationManager navigationManager
 <h3>Video Games</h3>
+
+<button @onclick="AddVideoGame" class="btn btn-primary">Add Video Game</button>
 
 @if (games.Count <= 0)
 {
@@ -23,5 +26,10 @@ else
 	{
 		var result = await Http.GetFromJsonAsync<List<VideoGame>>("http://localhost:5010/api/videogame");
 		if (result != null) games = result;
+	}
+
+	void AddVideoGame()
+	{
+		navigationManager.NavigateTo("./videogame");
 	}
 }

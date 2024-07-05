@@ -16,4 +16,12 @@
     <ProjectReference Include="..\SimpleVideoGameLibrary.Shared\SimpleVideoGameLibrary.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\EditVideoGame.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\EditVideoGame.razor" />
+  </ItemGroup>
+
 </Project>

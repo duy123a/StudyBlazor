@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleVideoGameLibrary.Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleVideoGameLibrary.Shared", "SimpleVideoGameLibrary.Shared\SimpleVideoGameLibrary.Shared.csproj", "{94A786E0-8A2A-4097-BC97-DE321A0AE28F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleVideoGameLibrary.Client", "SimpleVideoGameLibrary.Client\SimpleVideoGameLibrary.Client.csproj", "{DC23EB3E-F42E-4035-B37E-015784294DD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleVideoGameLibrary.Client", "SimpleVideoGameLibrary.Client\SimpleVideoGameLibrary.Client.csproj", "{DC23EB3E-F42E-4035-B37E-015784294DD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
