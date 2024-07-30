@@ -20,5 +20,12 @@ namespace SimpleVideoGameLibrary.Server.Controllers
 			var list = await _context.VideoGames.OrderBy(g => g.ReleaseYear).ToListAsync();
 			return Ok(list);
 		}
+		[HttpPost]
+		public async Task<ActionResult<List<VideoGame>>> CreateVideoGame(VideoGame videoGame)
+		{
+			_context.VideoGames.Add(videoGame);
+			await _context.SaveChangesAsync();
+			return await GetAllVideoGame();
+		}
 	}
 }

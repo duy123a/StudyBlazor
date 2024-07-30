@@ -4,7 +4,7 @@
 <h3>Video Games</h3>
 
 <button @onclick="AddVideoGame" class="btn btn-primary">Add Video Game</button>
-
+<br />
 @if (games.Count <= 0)
 {
 	<span>Loading video games...</span>
@@ -15,6 +15,9 @@ else
 		<PropertyColumn Property="g => g.Title" />
 		<PropertyColumn Property="g => g.Publisher" />
 		<PropertyColumn Property="g => g.ReleaseYear" />
+		<TemplateColumn>
+			<button @onclick="(() => EditVideoGame(context.Id))" class="btn btn-primary">Edit</button>
+		</TemplateColumn>
 	</QuickGrid>
 }
 
@@ -31,5 +34,10 @@ else
 	void AddVideoGame()
 	{
 		navigationManager.NavigateTo("./videogame");
+	}
+
+	void EditVideoGame(int id)
+	{
+		navigationManager.NavigateTo($"./videogame/{id}");
 	}
 }
