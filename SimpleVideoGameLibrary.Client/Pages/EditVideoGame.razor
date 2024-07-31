@@ -1,6 +1,7 @@
 ﻿@page "/videogame"
 @page "/videogame/{id:int}"
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 @if (Id is null) {
 	<PageTitle>Add a new video game</PageTitle>
@@ -33,6 +34,18 @@ else
 	[Parameter]
 	public int? Id { get; set; }
 
+	protected override async Task OnParametersSetAsync()
+	{
+		if (Id is not null)
+		{
+			var result = await Http.GetFromJsonAsync<VideoGame>($"http://localhost:5010/api/videogame/{Id}");
+			if (result is not null)
+			{
+				game = result;
+			}
+		}
+	}
+
 	VideoGame game = new VideoGame { Title = "New Game" };
 
 	async Task HandleSubmit()
@@ -45,5 +58,6 @@ else
 		{
 			await Http.PutAsJsonAsync($"http://localhost:5010/api/videogame/{Id}", game);
 		}
+		NavigationManager.NavigateTo("/videogames");
 	}
 }

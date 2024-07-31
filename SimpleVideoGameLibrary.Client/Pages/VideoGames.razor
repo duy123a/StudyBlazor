@@ -18,6 +18,9 @@ else
 		<TemplateColumn>
 			<button @onclick="(() => EditVideoGame(context.Id))" class="btn btn-primary">Edit</button>
 		</TemplateColumn>
+		<TemplateColumn>
+			<button @onclick="(() => DeleteVideoGame(context.Id))" class="btn btn-danger">Delete</button>
+		</TemplateColumn>
 	</QuickGrid>
 }
 
@@ -39,5 +42,13 @@ else
 	void EditVideoGame(int id)
 	{
 		navigationManager.NavigateTo($"./videogame/{id}");
+	}
+
+	async void DeleteVideoGame(int id)
+	{
+		await Http.DeleteAsync($"http://localhost:5010/api/videogame/{id}");
+		var result = await Http.GetFromJsonAsync<List<VideoGame>>("http://localhost:5010/api/videogame");
+		if (result != null) games = result;
+		StateHasChanged();
 	}
 }
