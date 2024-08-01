@@ -1,54 +1,47 @@
 ﻿@page "/videogames"
-@inject HttpClient Http
-@inject NavigationManager navigationManager
+@using SimpleVideoGameLibrary.Client.Abstraction
+@using System.ComponentModel
+@inject IVideoGamesViewModel ViewModel
 <h3>Video Games</h3>
 
-<button @onclick="AddVideoGame" class="btn btn-primary">Add Video Game</button>
+<button @onclick="ViewModel.AddVideoGame" class="btn btn-primary">Add Video Game</button>
 <br />
-@if (games.Count <= 0)
+@if (ViewModel.Games.Count <= 0)
 {
 	<span>Loading video games...</span>
 }
 else
 {
-	<QuickGrid Items="games.AsQueryable()">
+	<QuickGrid Items="ViewModel.Games.AsQueryable()">
 		<PropertyColumn Property="g => g.Title" />
 		<PropertyColumn Property="g => g.Publisher" />
 		<PropertyColumn Property="g => g.ReleaseYear" />
 		<TemplateColumn>
-			<button @onclick="(() => EditVideoGame(context.Id))" class="btn btn-primary">Edit</button>
+			<button @onclick="(() => ViewModel.EditVideoGame(context.Id))" class="btn btn-primary">Edit</button>
 		</TemplateColumn>
 		<TemplateColumn>
-			<button @onclick="(() => DeleteVideoGame(context.Id))" class="btn btn-danger">Delete</button>
+			<button @onclick="(() => ViewModel.DeleteVideoGameAsync(context.Id))" class="btn btn-danger">Delete</button>
 		</TemplateColumn>
 	</QuickGrid>
 }
 
-
 @code {
-	List<VideoGame> games = new List<VideoGame>();
+	async void OnPropertyChangedHandler(object? sender, PropertyChangedEventArgs e)
+	{
+		await InvokeAsync(() =>
+		{
+			StateHasChanged();
+		});
+	}
 
 	protected override async Task OnInitializedAsync()
 	{
-		var result = await Http.GetFromJsonAsync<List<VideoGame>>("http://localhost:5010/api/videogame");
-		if (result != null) games = result;
+		ViewModel.PropertyChanged += OnPropertyChangedHandler;
+		await ViewModel.OnInitializedAsync();
 	}
 
-	void AddVideoGame()
+	public void Dispose()
 	{
-		navigationManager.NavigateTo("./videogame");
-	}
-
-	void EditVideoGame(int id)
-	{
-		navigationManager.NavigateTo($"./videogame/{id}");
-	}
-
-	async void DeleteVideoGame(int id)
-	{
-		await Http.DeleteAsync($"http://localhost:5010/api/videogame/{id}");
-		var result = await Http.GetFromJsonAsync<List<VideoGame>>("http://localhost:5010/api/videogame");
-		if (result != null) games = result;
-		StateHasChanged();
+		ViewModel.PropertyChanged -= OnPropertyChangedHandler;
 	}
 }

@@ -42,7 +42,7 @@ namespace SimpleVideoGameLibrary.Server.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public async Task<ActionResult<List<VideoGame>>> UpdateVideoGame(int id ,VideoGame videoGame)
+		public async Task<ActionResult<List<VideoGame>>> UpdateVideoGame(int id, VideoGame videoGame)
 		{
 			var dbVideoGame = await _context.VideoGames.FindAsync(id);
 			if (dbVideoGame == null)

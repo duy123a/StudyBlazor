@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using SimpleVideoGameLibrary.Client.Abstraction;
+using SimpleVideoGameLibrary.Client.ViewModels;
 
 namespace SimpleVideoGameLibrary.Client
 {
@@ -12,6 +14,7 @@ namespace SimpleVideoGameLibrary.Client
 			builder.RootComponents.Add<HeadOutlet>("head::after");
 
 			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+			builder.Services.AddScoped<IVideoGamesViewModel, VideoGamesViewModel>();
 
 			await builder.Build().RunAsync();
 		}
